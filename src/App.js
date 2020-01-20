@@ -1,8 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 function App() {
   const [techs, setTechs] = useState([]);
   const [newTech, setNewTech] = useState('');
+
+  const addTech = useCallback(() => {
+    setTechs([...techs, newTech]);
+    setNewTech('');
+  }, [newTech, techs]);
 
   useEffect(() => {
     const storageTechs = localStorage.getItem('techs');
@@ -17,11 +22,6 @@ function App() {
   }, [techs]);
 
   const numberOfTechs = useMemo(() => techs.length, [techs]);
-
-  function addTech() {
-    setTechs([...techs, newTech]);
-    setNewTech('');
-  }
 
   return (
     <>
